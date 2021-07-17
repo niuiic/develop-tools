@@ -5,6 +5,7 @@ Some custom develop tools.
 Just modify `templatePath` defined at the first line of the `devopt.sh`. And you can use the tools.
 
 OS: linux
+
 Editor: (neo)vim (some plugins needed)
 
 > If you don't use vim as the editor or you don't have the configuration. Then you need to modify the script for yourself.
