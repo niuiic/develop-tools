@@ -7,10 +7,9 @@ if (($# < 1)); then
     echo -e "4. \033[35m package-with-tauri \033[0m: Package a vue project with tauri."
     echo -e "5. \033[35m stm32-init \033[0m: Set configuration for rust stm32 project."
     echo -e "6. \033[35m openocd-connect \033[0m: Connect to develop board with openocd."
-    echo -e "7. \033[35m rust-task-init \033[0m: Configure task.ini for rust project to fix the error format problem."
-    echo -e "8. \033[35m fpga-init \033[0m: Init configuration for FPGA."
-    echo -e "9. \033[35m stm8-init \033[0m: Set configuration for stm8 project."
-    echo -e "10. \033[35m rust-new \033[0m: Create a normal rust project."
+    echo -e "7. \033[35m fpga-init \033[0m: Init configuration for FPGA."
+    echo -e "8. \033[35m stm8-init \033[0m: Set configuration for stm8 project."
+    echo -e "9. \033[35m rust-new \033[0m: Create a normal rust project."
     exit 0
 fi
 
@@ -93,9 +92,6 @@ elif [ $1 == "openocd-connect" ]; then
     openocd -f openocd.cfg
 elif [ $1 == "openocd-disconnect" ]; then
     killall openocd
-elif [ $1 == "rust-task-init" ]; then
-    cp "$templatePath/rust/tasks.sh .tasks.sh"
-    cp "$templatePath/rust/task.ini .task.ini"
 elif [ $1 == "fpga-init" ]; then
     if [ -d "sim_dir" ]; then
         cd sim_dir
