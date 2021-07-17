@@ -1,0 +1,12 @@
+# .cargo/config
+
+[build]
+target = "aarch64-unknown-linux-musl"
+
+[target.aarch64-unknown-linux-musl]
+rustflags = [
+  "-C",
+  "linker=aarch64-unknown-linux-musl-gcc",
+  "-C",
+  "target-feature=+crt-static",
+]

@@ -1,0 +1,11 @@
+stm32f1xx-hal = { git = "https://github.com/stm32-rs/stm32f1xx-hal", features = ["medium", "rt", "stm32f103"] }
+# cortex-m-rt = { version = "*", features = ["device"] }
+cortex-m-rtic = "*"
+cortex-m = "*"
+cortex-m-semihosting = "*"
+panic-semihosting = { version = "*", features = ["exit"] }
+
+[profile.release]
+opt-level = 'z'
+lto = true
+debug = true

@@ -1,0 +1,14 @@
+CompileFlags:
+  Remove: [-mstm8, --std-sdcc11, --debug, --out-fmt-elf]
+Diagnostics:
+  ClangTidy:
+    Add:
+      [
+        performance-*,
+        bugprone-*,
+        portability-*,
+        modernize-*,
+      ]
+    Remove: modernize-use-trailing-return-type
+    CheckOptions:
+      WarnOnFloatingPointNarrowingConversion: false
