@@ -5,11 +5,12 @@ if (($# < 1)); then
     echo -e "2. \033[35m vue \033[0m: Create a vue project with typescript, less and vite."
     echo -e "3. \033[35m tauri \033[0m: Create a tauri project with vue typescript, less and vite."
     echo -e "4. \033[35m package-with-tauri \033[0m: Package a vue project with tauri."
-    echo -e "5. \033[35m stm32-init \033[0m: Set configuration for rust stm32 project."
+    echo -e "5. \033[35m stm32 \033[0m: Create a rust stm32 project."
     echo -e "6. \033[35m openocd-connect \033[0m: Connect to develop board with openocd."
     echo -e "7. \033[35m fpga-init \033[0m: Init configuration for FPGA."
-    echo -e "8. \033[35m stm8-init \033[0m: Set configuration for stm8 project."
-    echo -e "9. \033[35m rust-new \033[0m: Create a normal rust project."
+    echo -e "8. \033[35m stm8 \033[0m: Create a stm8 project."
+    echo -e "9. \033[35m rust \033[0m: Create a normal rust project."
+    echo -e "10. \033[35m gd32 \033[0m: Create a rust gd32-riscv project."
     exit 0
 fi
 
@@ -67,27 +68,27 @@ elif [ $1 == "package-with-tauri" ]; then
     yarn add tauri @types/sharp
     yarn add @rollup/plugin-replace -D
     yarn tauri init
-elif [ $1 == "stm32-init" ]; then
-    if (($# < 2)); then
-        echo "Please input family name of stm32 chip."
-        echo "For example : devopt stm32-init f1"
-    else
-        mkdir .cargo
+elif [ $1 == "stm32" ]; then
+    echo "Please input the project name."
+    read projectName
+    echo "Please input the of family name of the stm32 chip."
+    read chipName
+    cargo new $projectName
+    cd $projectName
 
-        while read line; do
-            echo -e $line >>Cargo.toml
-        done <"$templatePath/stm32/$2_Cargo.toml"
-
-        cp "$templatePath/stm32/$2_memory.x" memory.x
-        cp "$templatePath/stm32/debug.gdb" debug.gdb
-        cp "$templatePath/stm32/$2_task.ini" .task.ini
-        cp "$templatePath/stm32/$2_config" .cargo/config
-        cp "$templatePath/rust/tasks.sh" .tasks.sh
-        cp "$templatePath/stm32/$2_openocd.cfg" openocd.cfg
-        rm src/main.rs
-        touch src/main.rs
-        proxychains -q cargo build
-    fi
+    mkdir .cargo
+    while read line; do
+        echo -e $line >>Cargo.toml
+    done <"$templatePath/stm32/$chipName""_Cargo.toml"
+    cp "$templatePath/stm32/$chipName""_memory.x" memory.x
+    cp "$templatePath/stm32/debug.gdb" debug.gdb
+    cp "$templatePath/stm32/$chipName""_task.ini" .task.ini
+    cp "$templatePath/stm32/$chipName""_config" .cargo/config
+    cp "$templatePath/rust/tasks.sh" .tasks.sh
+    cp "$templatePath/stm32/$chipName""_openocd.cfg" openocd.cfg
+    rm src/main.rs
+    touch src/main.rs
+    proxychains -q cargo build
 elif [ $1 == "openocd-connect" ]; then
     openocd -f openocd.cfg
 elif [ $1 == "openocd-disconnect" ]; then
@@ -102,7 +103,7 @@ elif [ $1 == "fpga-init" ]; then
     cp "$templatePath/FPGA/task.ini" .task.ini
     cp "$templatePath/FPGA/tasks.sh" .tasks.sh
     touch .root
-elif [ $1 == "stm8-init" ]; then
+elif [ $1 == "stm8" ]; then
     echo "Please input the project name."
     read projectName
     mkdir $projectName
@@ -112,7 +113,6 @@ elif [ $1 == "stm8-init" ]; then
     cp "$templatePath/stm8/tasks.sh" .tasks.sh
     cp "$templatePath/stm8/debug.gdb" debug.gdb
     cp "$templatePath/stm8/root_CMakeLists.txt" CMakeLists.txt
-    # cp "$templatePath/stm8/clangd" .clangd
     sed -i "s/projectName/$projectName/g" CMakeLists.txt
     touch .root
     mkdir lib
@@ -122,15 +122,18 @@ elif [ $1 == "stm8-init" ]; then
     cd src
     cp "$templatePath/stm8/sub_CMakeLists.txt" CMakeLists.txt
     touch main.c
-elif [ $1 == "rust-new" ]; then
-    if (($# > 1)); then
-        cargo new $2
-        cd $2
-        cp "$templatePath/rust/task.ini" .task.ini
-        cp "$templatePath/rust/tasks.sh" .tasks.sh
-        cat >Cargo.toml <<EOF
+elif [ $1 == "rust" ]; then
+    echo "Please input the project name."
+    read projectName
+    cargo new $projectName
+    cd $projectName
+    cp "$templatePath/rust/task.ini" .task.ini
+    cp "$templatePath/rust/tasks.sh" .tasks.sh
+    cp "$templatePath/rust/vimspector.json" .vimspector.json
+    sed -i "s/program_target/$projectName/g" .vimspector.json
+    cat >Cargo.toml <<EOF
 [package]
-name = "$2"
+name = "$projectName"
 version = "0.1.0"
 edition = "2018"
 
@@ -138,16 +141,18 @@ edition = "2018"
 members = []
 
 [[bin]]
-name = "$2"
+name = "$projectName"
 path = "src/main.rs"
 
 [dependencies]
 EOF
-        mkdir test
-        mkdir examples
-    else
-        echo "Please input the project name as an argument."
-    fi
+    mkdir tests
+    mkdir examples
+elif [ $1 == "gd32" ]; then
+    cp "$templatePath/gd32/openocd.cfg" .
+    cp "$templatePath/gd32/debug.gdb" .
+    mkdir .cargo
+    cp "$templatePath/gd32/config" ./.cargo
 else
     echo "No such arguments"
 fi
