@@ -1,4 +1,4 @@
-headerDir="/home/niuiic/Applicants/DevOpt/template/stm8/headers"
+headerDir="/home/niuiic/Applications/DevOpt/template/stm8/headers"
 
 if [ -d "build" ]; then
     cd build

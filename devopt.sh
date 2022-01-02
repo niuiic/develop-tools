@@ -1,4 +1,4 @@
-templatePath="/home/niuiic/Applicants/DevOpt/template"
+templatePath="/home/niuiic/Applications/DevOpt/template"
 
 if (($# < 1)); then
     echo -e "1. \033[35m rust-aarch64-static \033[0m: Set configuration for rust project to use aacrh64 target with static library."
@@ -30,6 +30,7 @@ elif [ $1 == "vue" ]; then
     yarn add eslint eslint-plugin-vue -D
     yarn add @vuedx/typescript-plugin-vue -D
     cp "$templatePath/vue/task.ini" .task.ini
+    touch .root
     rm ./tsconfig.json
     cp "$templatePath/vue/tsconfig.json" tsconfig.json
     rm src/shims-vue.d.ts
@@ -48,6 +49,7 @@ elif [ $1 == "tauri" ]; then
     yarn add eslint eslint-plugin-vue -D
     yarn add @vuedx/typescript-plugin-vue -D
     cp "$templatePath/tauri/task.ini" .task.ini
+    touch .root
     rm ./tsconfig.json
     cp "$templatePath/tauri/tsconfig.json" tsconfig.json
     rm src/shims-vue.d.ts
@@ -75,11 +77,11 @@ elif [ $1 == "stm32" ]; then
     read chipName
     cargo new $projectName
     cd $projectName
-
     mkdir .cargo
     while read line; do
         echo -e $line >>Cargo.toml
     done <"$templatePath/stm32/$chipName""_Cargo.toml"
+    touch .root
     cp "$templatePath/stm32/$chipName""_memory.x" memory.x
     cp "$templatePath/stm32/debug.gdb" debug.gdb
     cp "$templatePath/stm32/$chipName""_task.ini" .task.ini
@@ -128,6 +130,7 @@ elif [ $1 == "rust" ]; then
     cargo new $projectName
     cd $projectName
     cp "$templatePath/rust/task.ini" .task.ini
+    touch .root
     cp "$templatePath/rust/tasks.sh" .tasks.sh
     cp "$templatePath/rust/vimspector.json" .vimspector.json
     sed -i "s/program_target/$projectName/g" .vimspector.json
@@ -152,7 +155,15 @@ elif [ $1 == "gd32" ]; then
     cp "$templatePath/gd32/openocd.cfg" .
     cp "$templatePath/gd32/debug.gdb" .
     mkdir .cargo
+    touch .root
     cp "$templatePath/gd32/config" ./.cargo
+elif [ $1 == "react" ]; then
+    echo "What's your app's name?"
+    read appName
+    proxychains -q npx create-react-app $appName
+    cd $appName
+    cp "$templatePath/react/task.ini" .task.ini
+    touch .root
 else
     echo "No such arguments"
 fi
