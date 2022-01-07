@@ -95,7 +95,7 @@ elif [ $1 == "openocd-connect" ]; then
     openocd -f openocd.cfg
 elif [ $1 == "openocd-disconnect" ]; then
     killall openocd
-elif [ $1 == "fpga-init" ]; then
+elif [ $1 == "fpga" ]; then
     if [ -d "sim_dir" ]; then
         cd sim_dir
     else
@@ -160,9 +160,21 @@ elif [ $1 == "gd32" ]; then
 elif [ $1 == "react" ]; then
     echo "What's your app's name?"
     read appName
-    proxychains -q npx create-react-app $appName
+    proxychains -q create-react-app $appName
     cd $appName
     cp "$templatePath/react/task.ini" .task.ini
+    cp "$templatePath/react/task.sh" .task.sh
+    rm ./src/*
+    cp "$templatePath/react/App.js" ./src
+    cp "$templatePath/react/index.js" ./src
+    touch .root
+elif [ $1 == "react-native" ]; then
+    echo "What's your app's name?"
+    read appName
+    proxychains -q react-native init $appName
+    cd $appName
+    cp "$templatePath/react_native/task.ini" .task.ini
+    cp "$templatePath/react_native/task.sh" .task.sh
     touch .root
 else
     echo "No such arguments"
