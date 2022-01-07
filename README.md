@@ -6,9 +6,14 @@ Just modify `templatePath` defined at the first line of the `devopt.sh`. And you
 
 OS: linux
 
-Editor: (neo)vim (some plugins needed)
+Editor: (neo)vim
 
 > If you don't use vim as the editor or you don't have the configuration. Then you need to modify the script for yourself.
+
+Tools may be needed:
+1. neovim
+2. asynctasks.vim asyncrun.vim
+3. vimspector
 
 ## tools
 
@@ -16,8 +21,12 @@ Editor: (neo)vim (some plugins needed)
 2. vue: Create a vue project with typescript, less and vite.
 3. tauri: Create a tauri project with vue typescript, less and vite.
 4. package-with-tauri: Package a vue project with tauri.
-5. stm32-init: Set configuration for rust stm32 project.
+5. stm32: Create a rust stm32 project.
 6. openocd-connect: Connect to develop board with openocd.
-7. fpga-init: Init configuration for FPGA.
-8. stm8-init: Set configuration for stm8 project.
-9. rust-new: Create a normal rust project.
+7. openocd-disconnect: Disconnect to the developboard.
+8. fpga: Init configuration for a FPGA project.
+9. stm8: Create a C stm8 project.
+10. rust: Create a normal rust project.
+11. gd32: Create a project for gd32vf103CBT6(RISC-V).
+12. react: Create a react.js project.
+13. react-native: Create a react native project.
