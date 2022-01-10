@@ -160,19 +160,40 @@ elif [ $1 == "gd32" ]; then
 elif [ $1 == "react" ]; then
     echo "What's your app's name?"
     read appName
-    proxychains -q create-react-app $appName
+    echo "Which language will be used, js or ts?"
+    read lang
+    if [[ $lang == "js" ]]; then
+        proxychains -q create-react-app $appName --template redux
+    elif [[ $lang == "ts" ]]; then
+        proxychains -q create-react-app $appName --template redux-typescript
+    fi
     cd $appName
     cp "$templatePath/react/task.ini" .task.ini
     cp "$templatePath/react/task.sh" .task.sh
-    rm ./src/*
-    cp "$templatePath/react/App.js" ./src
-    cp "$templatePath/react/index.js" ./src
+    if [[ $lang == "js" ]]; then
+        npm install prop-types --save
+    fi
     touch .root
+    cd ./public
+    rm -rf *
+    cat >index.html <<EOF
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>$appName</title>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
+EOF
 elif [ $1 == "react-native" ]; then
     echo "What's your app's name?"
     read appName
     proxychains -q react-native init $appName
     cd $appName
+    npm install prop-types --save
     cp "$templatePath/react_native/task.ini" .task.ini
     cp "$templatePath/react_native/task.sh" .task.sh
     touch .root
