@@ -191,9 +191,17 @@ EOF
 elif [ $1 == "react-native" ]; then
     echo "What's your app's name?"
     read appName
-    proxychains -q react-native init $appName
+    echo "Which language will be used, js or ts?"
+    read lang
+    if [[ $lang == "js" ]]; then
+        proxychains -q react-native init $appName
+    else
+        proxychains -q react-native init $appName --template react-native-template-typescript
+    fi
     cd $appName
-    npm install prop-types --save
+    if [[ $lang == "js" ]]; then
+        npm install prop-types --save
+    fi
     cp "$templatePath/react_native/task.ini" .task.ini
     cp "$templatePath/react_native/task.sh" .task.sh
     touch .root
