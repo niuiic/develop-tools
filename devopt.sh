@@ -163,9 +163,9 @@ elif [ $1 == "react" ]; then
     echo "Which language will be used, js or ts?"
     read lang
     if [[ $lang == "js" ]]; then
-        proxychains -q create-react-app $appName --template redux
+        proxychains -q npx create-react-app $appName --template redux
     elif [[ $lang == "ts" ]]; then
-        proxychains -q create-react-app $appName --template redux-typescript
+        proxychains -q npx create-react-app $appName --template redux-typescript
     fi
     cd $appName
     cp "$templatePath/react/task.ini" .task.ini
@@ -194,16 +194,22 @@ elif [ $1 == "react-native" ]; then
     echo "Which language will be used, js or ts?"
     read lang
     if [[ $lang == "js" ]]; then
-        proxychains -q react-native init $appName
+        proxychains -q npx create-react-native-app $appName
+    elif [[ $lang == "ts" ]]; then
+        proxychains -q npx create-react-native-app $appName -t with-typescript
     else
-        proxychains -q react-native init $appName --template react-native-template-typescript
+        echo "Wrong input"
     fi
     cd $appName
     if [[ $lang == "js" ]]; then
-        npm install prop-types --save
+        proxychains-q yarn add prop-types
     fi
     cp "$templatePath/react_native/task.ini" .task.ini
     cp "$templatePath/react_native/task.sh" .task.sh
+    cp "$templatePath/react_native/eslintrc.js" .eslintrc.js
+    cp "$templatePath/react_native/metro.config.js" metro.config.js
+    cp "$templatePath/react_native/app.json" app.json
+    proxychains -q yarn add --dev react-native-sass-transformer sass
     touch .root
 else
     echo "No such arguments"
