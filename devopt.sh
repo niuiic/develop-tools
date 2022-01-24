@@ -7,10 +7,13 @@ if (($# < 1)); then
     echo -e "4. \033[35m package-with-tauri \033[0m: Package a vue project with tauri."
     echo -e "5. \033[35m stm32 \033[0m: Create a rust stm32 project."
     echo -e "6. \033[35m openocd-connect \033[0m: Connect to develop board with openocd."
-    echo -e "7. \033[35m fpga-init \033[0m: Init configuration for FPGA."
-    echo -e "8. \033[35m stm8 \033[0m: Create a stm8 project."
-    echo -e "9. \033[35m rust \033[0m: Create a normal rust project."
-    echo -e "10. \033[35m gd32 \033[0m: Create a rust gd32-riscv project."
+    echo -e "7. \033[35m openocd-disconnect \033[0m: Kill openocd."
+    echo -e "8. \033[35m fpga \033[0m: Init configuration for FPGA."
+    echo -e "9. \033[35m stm8 \033[0m: Create a stm8 project."
+    echo -e "10. \033[35m rust \033[0m: Create a normal rust project."
+    echo -e "11. \033[35m gd32 \033[0m: Create a rust gd32-riscv project."
+    echo -e "12. \033[35m react \033[0m: Create a react project."
+    echo -e "13. \033[35m react-native \033[0m: Create a react-native project."
     exit 0
 fi
 
