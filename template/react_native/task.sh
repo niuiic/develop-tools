@@ -1,3 +1,3 @@
 if [[ $1 == "projectRun" ]]; then
-    proxychains -q yarn android
+    echo "Run \`pro yarn android\` in inner terminal."
 fi
