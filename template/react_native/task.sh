@@ -1,3 +1,4 @@
 if [[ $1 == "projectRun" ]]; then
-    echo "Run \`pro yarn android\` in inner terminal."
+    echo "Run \`yarn android\` in inner terminal."
+    echo "Notice: proxy is not allowed."
 fi

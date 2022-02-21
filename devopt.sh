@@ -205,7 +205,10 @@ elif [ $1 == "react-native" ]; then
     fi
     cd $appName
     if [[ $lang == "js" ]]; then
-        proxychains-q yarn add prop-types
+        proxychains -q yarn add prop-types
+        proxychains -q yarn add react-router-native
+    else
+        proxychains -q yarn add @types/react-router-native
     fi
     cp "$templatePath/react_native/task.ini" .task.ini
     cp "$templatePath/react_native/task.sh" .task.sh
