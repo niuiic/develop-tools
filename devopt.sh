@@ -14,6 +14,7 @@ if (($# < 1)); then
     echo -e "11. \033[35m gd32 \033[0m: Create a rust gd32-riscv project."
     echo -e "12. \033[35m react \033[0m: Create a react project."
     echo -e "13. \033[35m react-native \033[0m: Create a react-native project."
+    echo -e "14. \033[35m beego-api \033[0m: Create a beego api project."
     exit 0
 fi
 
@@ -207,8 +208,10 @@ elif [ $1 == "react-native" ]; then
     if [[ $lang == "js" ]]; then
         proxychains -q yarn add prop-types
         proxychains -q yarn add react-router-native
+        proxychains -q yarn add redux react-redux
     else
         proxychains -q yarn add @types/react-router-native
+        proxychains -q yarn add @types/redux @types/react-redux
     fi
     cp "$templatePath/react_native/task.ini" .task.ini
     cp "$templatePath/react_native/task.sh" .task.sh
@@ -216,6 +219,17 @@ elif [ $1 == "react-native" ]; then
     cp "$templatePath/react_native/metro.config.js" metro.config.js
     cp "$templatePath/react_native/app.json" app.json
     proxychains -q yarn add --dev react-native-sass-transformer sass
+    touch .root
+elif [ $1 == "beego-api" ]; then
+    echo "What's your project's name?"
+    read projectName
+    bee api $projectName
+    cd $projectName
+    go get $projectName
+    go get -u all
+    go get github.com/go-sql-driver/mysql
+    bee generate docs
+    cp "$templatePath/beego/task.ini" .task.ini
     touch .root
 else
     echo "No such arguments"
