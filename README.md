@@ -30,3 +30,4 @@ Tools may be needed:
 11.  gd32 : Create a rust gd32-riscv project.
 12.  react : Create a react project.
 13.  react-native : Create a react-native project.
+14.  beego-api : Create a beego api project.
