@@ -207,18 +207,23 @@ elif [ $1 == "react-native" ]; then
     cd $appName
     if [[ $lang == "js" ]]; then
         proxychains -q yarn add prop-types
-        proxychains -q yarn add react-router-native
-        proxychains -q yarn add redux react-redux
+        proxychains -q yarn add @reduxjs/toolkit react-redux
+        proxychains -q yarn add redux-logger
     else
-        proxychains -q yarn add @types/react-router-native
-        proxychains -q yarn add @types/redux @types/react-redux
+        proxychains -q yarn add @reduxjs/toolkit react-redux @types/react-redux
+        proxychains -q yarn add redux-logger @types/redux-logger
     fi
     cp "$templatePath/react_native/task.ini" .task.ini
     cp "$templatePath/react_native/task.sh" .task.sh
     cp "$templatePath/react_native/eslintrc.js" .eslintrc.js
-    cp "$templatePath/react_native/metro.config.js" metro.config.js
-    cp "$templatePath/react_native/app.json" app.json
-    proxychains -q yarn add --dev react-native-sass-transformer sass
+    # cp "$templatePath/react_native/metro.config.js" metro.config.js
+    # cp "$templatePath/react_native/app.json" app.json
+    # proxychains -q yarn add --dev react-native-sass-transformer sass
+    proxychains -q expo install react-native-screens react-native-safe-area-context
+    proxychains -q yarn add redux-persist-expo-filesystem
+    proxychains -q yarn add redux-persist
+    proxychains -q yarn add @react-navigation/native
+    # proxychains -q yarn add react-native-navigation
     touch .root
 elif [ $1 == "beego-api" ]; then
     echo "What's your project's name?"
