@@ -216,15 +216,16 @@ elif [ $1 == "react-native" ]; then
     cp "$templatePath/react_native/task.ini" .task.ini
     cp "$templatePath/react_native/task.sh" .task.sh
     cp "$templatePath/react_native/eslintrc.js" .eslintrc.js
-    # cp "$templatePath/react_native/metro.config.js" metro.config.js
-    # cp "$templatePath/react_native/app.json" app.json
-    # proxychains -q yarn add --dev react-native-sass-transformer sass
     proxychains -q expo install react-native-screens react-native-safe-area-context
     proxychains -q yarn add redux-persist-expo-filesystem
     proxychains -q yarn add redux-persist
     proxychains -q yarn add @react-navigation/native
-    # proxychains -q yarn add react-native-navigation
     touch .root
+
+    # cp "$templatePath/react_native/metro.config.js" metro.config.js
+    # cp "$templatePath/react_native/app.json" app.json
+    # proxychains -q yarn add --dev react-native-sass-transformer sass
+    # proxychains -q yarn add react-native-navigation
 elif [ $1 == "beego-api" ]; then
     echo "What's your project's name?"
     read projectName
