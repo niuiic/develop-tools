@@ -195,37 +195,42 @@ EOF
 elif [ $1 == "react-native" ]; then
     echo "What's your app's name?"
     read appName
-    echo "Which language will be used, js or ts?"
-    read lang
-    if [[ $lang == "js" ]]; then
-        proxychains -q npx create-react-native-app $appName
-    elif [[ $lang == "ts" ]]; then
-        proxychains -q npx create-react-native-app $appName -t with-typescript
-    else
-        echo "Wrong input"
-    fi
+
+    # create project
+    echo "Choose the template called \`blank (TypeScript)\`."
+    proxychains -q expo init $appName
     cd $appName
-    if [[ $lang == "js" ]]; then
-        proxychains -q yarn add prop-types
-        proxychains -q yarn add @reduxjs/toolkit react-redux
-        proxychains -q yarn add redux-logger
-    else
-        proxychains -q yarn add @reduxjs/toolkit react-redux @types/react-redux
-        proxychains -q yarn add redux-logger @types/redux-logger
-    fi
+
+    # for storybook
+    proxychains -q npx -p @storybook/cli sb init --type react
+
+    # for redux-toolkit and middlewares
+    proxychains -q yarn add @reduxjs/toolkit react-redux
+    proxychains -q yarn add redux-logger @types/redux-logger
+
+    # editor configuration
     cp "$templatePath/react_native/task.ini" .task.ini
     cp "$templatePath/react_native/task.sh" .task.sh
     cp "$templatePath/react_native/eslintrc.js" .eslintrc.js
-    proxychains -q expo install react-native-screens react-native-safe-area-context
-    proxychains -q yarn add redux-persist-expo-filesystem
-    proxychains -q yarn add redux-persist
-    proxychains -q yarn add @react-navigation/native
     touch .root
 
-    # cp "$templatePath/react_native/metro.config.js" metro.config.js
-    # cp "$templatePath/react_native/app.json" app.json
-    # proxychains -q yarn add --dev react-native-sass-transformer sass
-    # proxychains -q yarn add react-native-navigation
+    # for redux-persist
+    proxychains -q yarn add redux-persist-expo-filesystem
+    proxychains -q yarn add redux-persist
+
+    # for react-navigation
+    proxychains -q yarn add @react-navigation/native
+    proxychains -q expo install react-native-screens react-native-safe-area-context
+    proxychains -q yarn add @react-navigation/native-stack
+
+    # for charts
+    proxychains -q yarn add react-native-gifted-charts react-native-linear-gradient react-native-svg react-native-canvas react-native-webview
+
+    # fix dependencies
+    proxychains -q expo doctor --fix-dependencies
+
+    # build project structure
+    mkdir -p components pages utils/constants utils/types assets tests
 elif [ $1 == "beego-api" ]; then
     echo "What's your project's name?"
     read projectName
