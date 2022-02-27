@@ -214,11 +214,11 @@ elif [ $1 == "react-native" ]; then
     cp "$templatePath/react_native/eslintrc.js" .eslintrc.js
     touch .root
 
-    # for redux-persist
+    # for data persist
     proxychains -q yarn add redux-persist-expo-filesystem
     proxychains -q yarn add redux-persist
 
-    # for react-navigation
+    # for navigation
     proxychains -q yarn add @react-navigation/native
     proxychains -q expo install react-native-screens react-native-safe-area-context
     proxychains -q yarn add @react-navigation/native-stack
