@@ -226,6 +226,9 @@ elif [ $1 == "react-native" ]; then
     # for charts
     proxychains -q yarn add react-native-gifted-charts react-native-linear-gradient react-native-svg react-native-canvas react-native-webview
 
+    # for styles
+    proxychains -q yarn add styled-components @types/styled-components @types/styled-components-react-native
+
     # fix dependencies
     proxychains -q expo doctor --fix-dependencies
 
