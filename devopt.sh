@@ -201,12 +201,62 @@ elif [ $1 == "react-native" ]; then
     proxychains -q expo init $appName
     cd $appName
 
-    # for storybook
-    proxychains -q npx -p @storybook/cli sb init --type react
+    # storybook
+    echo "Do you want to use storybook? (Y or N)"
+    read option
+    if [[ $option == "y" || $option == "Y" ]]; then
+        proxychains -q npx -p @storybook/cli sb init --type react
+    fi
 
-    # for redux-toolkit and middlewares
-    proxychains -q yarn add @reduxjs/toolkit react-redux
-    proxychains -q yarn add redux-logger @types/redux-logger
+    # redux
+    echo "Do you want to use redux? (Y or N)"
+    read option
+    if [[ $option == "y" || $option == "Y" ]]; then
+        # redux-toolkit and middlewares
+        proxychains -q yarn add @reduxjs/toolkit react-redux
+        proxychains -q yarn add redux-logger @types/redux-logger
+        # data persist
+        proxychains -q yarn add redux-persist-expo-filesystem
+        proxychains -q yarn add redux-persist
+    fi
+
+    # axios
+    echo "Do you want to use axios? (Y or N)"
+    read option
+    if [[ $option == "y" || $option == "Y" ]]; then
+        proxychains -q yarn add axios
+    fi
+
+    # navigation
+    echo "Do you want to use react navigation? (Y or N)"
+    read option
+    if [[ $option == "y" || $option == "Y" ]]; then
+        proxychains -q yarn add @react-navigation/native
+        proxychains -q expo install react-native-screens react-native-safe-area-context
+        proxychains -q yarn add @react-navigation/native-stack
+    fi
+
+    # styles
+    echo "Do you want to use styled-component? (Y or N)"
+    read option
+    if [[ $option == "y" || $option == "Y" ]]; then
+        proxychains -q yarn add styled-components @types/styled-components @types/styled-components-react-native
+    fi
+
+    # additions
+    echo "Do you want to add more additions? (Y or N)"
+    read option
+    if [[ $option == "y" || $option == "Y" ]]; then
+        # charts
+        proxychains -q yarn add react-native-gifted-charts react-native-svg react-native-canvas react-native-webview react-native-text
+        proxychains -q expo install expo-linear-gradient
+
+        # styled components
+        proxychains -q yarn add react-native-really-awesome-button react-native-textinput-effects
+    fi
+
+    # fix dependencies
+    proxychains -q expo doctor --fix-dependencies
 
     # editor configuration
     cp "$templatePath/react_native/task.ini" .task.ini
@@ -214,26 +264,14 @@ elif [ $1 == "react-native" ]; then
     cp "$templatePath/react_native/eslintrc.js" .eslintrc.js
     touch .root
 
-    # for data persist
-    proxychains -q yarn add redux-persist-expo-filesystem
-    proxychains -q yarn add redux-persist
-
-    # for navigation
-    proxychains -q yarn add @react-navigation/native
-    proxychains -q expo install react-native-screens react-native-safe-area-context
-    proxychains -q yarn add @react-navigation/native-stack
-
-    # for charts
-    proxychains -q yarn add react-native-gifted-charts react-native-linear-gradient react-native-svg react-native-canvas react-native-webview
-
-    # for styles
-    proxychains -q yarn add styled-components @types/styled-components @types/styled-components-react-native
-
-    # fix dependencies
-    proxychains -q expo doctor --fix-dependencies
-
     # build project structure
     mkdir -p components pages utils/constants utils/types assets tests
+    echo -e "{\n\t\"name\": \"components\"\n}" >components/package.json
+    echo -e "{\n\t\"name\": \"pages\"\n}" >pages/package.json
+    echo -e "{\n\t\"name\": \"assets\"\n}" >assets/package.json
+    echo -e "{\n\t\"name\": \"utils\"\n}" >utils/package.json
+    cp "$templatePath/react_native/tsconfig.json" tsconfig.json
+    cp "$templatePath/react_native/babel.config.js" babel.config.js
 elif [ $1 == "beego-api" ]; then
     echo "What's your project's name?"
     read projectName
