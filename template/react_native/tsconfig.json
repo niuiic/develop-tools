@@ -5,9 +5,11 @@
     "baseUrl": "./",
     "paths": {
       "pages/*": ["./pages/*"],
+      "reduxs/*": ["./reduxs/*"],
       "components/*": ["./components/*"],
       "asserts/*": ["./assets/*"],
-      "utils/*": ["./utils/*"]
+      "utils/*": ["./utils/*"],
+      "config/*": ["./config/*"]
     }
   }
 }

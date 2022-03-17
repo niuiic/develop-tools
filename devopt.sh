@@ -234,6 +234,7 @@ elif [ $1 == "react-native" ]; then
         proxychains -q yarn add @react-navigation/native
         proxychains -q expo install react-native-screens react-native-safe-area-context
         proxychains -q yarn add @react-navigation/native-stack
+        proxychains -q yarn add @react-navigation/bottom-tabs
     fi
 
     # styles
@@ -248,11 +249,18 @@ elif [ $1 == "react-native" ]; then
     read option
     if [[ $option == "y" || $option == "Y" ]]; then
         # charts
-        proxychains -q yarn add react-native-gifted-charts react-native-svg react-native-canvas react-native-webview react-native-text
-        proxychains -q expo install expo-linear-gradient
+        proxychains -q yarn add react-native-gifted-chartsreact-native-canvas react-native-webview react-native-text
+        proxychains -q yarn add -D react-native-svg-transformer
+        proxychains -q expo install expo-linear-gradient react-native-svg
 
         # styled components
         proxychains -q yarn add react-native-really-awesome-button react-native-textinput-effects
+
+        # icons
+        proxychains -q yarn add @native-base/icons
+
+        # keyboard
+        proxychains -q yarn add react-native-keyboard-aware-scroll-view
     fi
 
     # fix dependencies
@@ -264,12 +272,19 @@ elif [ $1 == "react-native" ]; then
     cp "$templatePath/react_native/eslintrc.js" .eslintrc.js
     touch .root
 
+    # project configuration
+    cp "$templatePath/react_native/metro.config.js" metro.config.js
+    mkdir -p assets/svg
+    cp "$templatePath/react_native/declarations.d.ts" assets/svg/declarations.d.ts
+    proxychains -q yarn add @expo/metro-config
+
     # build project structure
-    mkdir -p components pages utils/constants utils/types assets tests
+    mkdir -p components pages utils/constants utils/types tests reduxs
     echo -e "{\n\t\"name\": \"components\"\n}" >components/package.json
     echo -e "{\n\t\"name\": \"pages\"\n}" >pages/package.json
     echo -e "{\n\t\"name\": \"assets\"\n}" >assets/package.json
     echo -e "{\n\t\"name\": \"utils\"\n}" >utils/package.json
+    echo -e "{\n\t\"name\": \"reduxs\"\n}" >reduxs/package.json
     cp "$templatePath/react_native/tsconfig.json" tsconfig.json
     cp "$templatePath/react_native/babel.config.js" babel.config.js
 elif [ $1 == "beego-api" ]; then
