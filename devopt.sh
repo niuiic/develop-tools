@@ -227,6 +227,13 @@ elif [ $1 == "react-native" ]; then
         proxychains -q yarn add axios
     fi
 
+    # ahooks
+    echo "Do you want to use ahooks? (Y or N)"
+    read option
+    if [[ $option == "y" || $option == "Y" ]]; then
+        proxychains -q yarn add ahooks
+    fi
+
     # navigation
     echo "Do you want to use react navigation? (Y or N)"
     read option
