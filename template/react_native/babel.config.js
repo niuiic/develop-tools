@@ -13,6 +13,7 @@ module.exports = function (api) {
             utils: "./utils",
             reduxs: "./reduxs",
             config: "./config",
+            data_modules: "./data_modules",
             "@native-base/icons": "@native-base/icons/lib",
           },
         },

@@ -256,7 +256,10 @@ elif [ $1 == "react-native" ]; then
     read option
     if [[ $option == "y" || $option == "Y" ]]; then
         # charts
-        proxychains -q yarn add react-native-gifted-chartsreact-native-canvas react-native-webview react-native-text
+        proxychains -q yarn add react-native-gifted-charts react-native-canvas react-native-linear-gradient react-native-webview
+        # proxychains -q yarn add victory-native
+
+        # svg
         proxychains -q yarn add -D react-native-svg-transformer
         proxychains -q expo install expo-linear-gradient react-native-svg
 
@@ -268,10 +271,19 @@ elif [ $1 == "react-native" ]; then
 
         # keyboard
         proxychains -q yarn add react-native-keyboard-aware-scroll-view
+
+        # lazy loading list
+        proxychains -q yarn add recyclerlistview@beta
+
+        # time
+        proxychains -q yarn add moment
     fi
 
     # fix dependencies
     proxychains -q expo doctor --fix-dependencies
+    # reinstall react-native-svg to fix a bug
+    proxychains -q yarn remove react-native-svg
+    proxychains -q yarn add react-native-svg
 
     # editor configuration
     cp "$templatePath/react_native/task.ini" .task.ini
@@ -286,12 +298,13 @@ elif [ $1 == "react-native" ]; then
     proxychains -q yarn add @expo/metro-config
 
     # build project structure
-    mkdir -p components pages utils/constants utils/types tests reduxs
+    mkdir -p components pages utils/constants utils/types tests reduxs data_modules
     echo -e "{\n\t\"name\": \"components\"\n}" >components/package.json
     echo -e "{\n\t\"name\": \"pages\"\n}" >pages/package.json
     echo -e "{\n\t\"name\": \"assets\"\n}" >assets/package.json
     echo -e "{\n\t\"name\": \"utils\"\n}" >utils/package.json
     echo -e "{\n\t\"name\": \"reduxs\"\n}" >reduxs/package.json
+    echo -e "{\n\t\"name\": \"data_modules\"\n}" >data_modules/package.json
     cp "$templatePath/react_native/tsconfig.json" tsconfig.json
     cp "$templatePath/react_native/babel.config.js" babel.config.js
 elif [ $1 == "beego-api" ]; then
