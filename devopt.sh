@@ -318,6 +318,16 @@ elif [ $1 == "beego-api" ]; then
     bee generate docs
     cp "$templatePath/beego/task.ini" .task.ini
     touch .root
+
+    # test
+    echo "Do you want to add test framework (jest)? (Y or N)"
+    read option
+    if [[ $option == "y" || $option == "Y" ]]; then
+        proxychains -q expo install jest-expo jest
+        proxychains -q yarn add --dev @testing-library/react-native
+        proxychains -q yarn add --dev @testing-library/jest-native
+        echo "see details at https://docs.expo.dev/guides/testing-with-jest/"
+    fi
 else
     echo "No such arguments"
 fi
