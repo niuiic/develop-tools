@@ -164,19 +164,13 @@ elif [ $1 == "gd32" ]; then
 elif [ $1 == "react" ]; then
     echo "What's your app's name?"
     read appName
-    echo "Which language will be used, js or ts?"
-    read lang
-    if [[ $lang == "js" ]]; then
-        proxychains -q npx create-react-app $appName --template redux
-    elif [[ $lang == "ts" ]]; then
-        proxychains -q npx create-react-app $appName --template redux-typescript
-    fi
+    proxychains -q npx create-react-app $appName --template redux-typescript
     cd $appName
+    proxychains -q npm i axios ahooks react-router-dom
+    proxychains -q npm i -D @types/react-router-dom
+    proxychains -q npm i @mui/material @emotion/react @emotion/styled
     cp "$templatePath/react/task.ini" .task.ini
     cp "$templatePath/react/task.sh" .task.sh
-    if [[ $lang == "js" ]]; then
-        npm install prop-types --save
-    fi
     touch .root
     cd ./public
     rm -rf *
