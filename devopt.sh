@@ -142,7 +142,7 @@ elif [ $1 == "rust" ]; then
 [package]
 name = "$projectName"
 version = "0.1.0"
-edition = "2018"
+edition = "2021"
 
 [workspace]
 members = []
@@ -164,11 +164,10 @@ elif [ $1 == "gd32" ]; then
 elif [ $1 == "react" ]; then
     echo "What's your app's name?"
     read appName
-    proxychains -q npx create-react-app $appName --template redux-typescript
+    proxychains -q yarn create react-app $appName --template typescript
     cd $appName
-    proxychains -q npm i axios ahooks react-router-dom
-    proxychains -q npm i -D @types/react-router-dom
-    proxychains -q npm i @mui/material @emotion/react @emotion/styled
+    proxychains -q yarn add antd axios ahooks react-router-dom
+    proxychains -q yarn add --dev @types/react-router-dom
     cp "$templatePath/react/task.ini" .task.ini
     cp "$templatePath/react/task.sh" .task.sh
     touch .root
