@@ -26,27 +26,21 @@ elif [ $1 == "vue" ]; then
     read appName
     proxychains -q yarn create @vitejs/app $appName --template vue-ts
     cd $appName
+    rm -rf .vscode
     proxychains -q yarn set version berry
-    # proxychains -q yarn set version from sources
     cp "$templatePath/vue/yarnrc.yml" .yarnrc.yml
-    yarn install
-    yarn add less -D
-    yarn add eslint eslint-plugin-vue -D
-    yarn add @vuedx/typescript-plugin-vue -D
+    yarn
+    yarn add sass-loader node-sass -D
+    mkdir .vim
+    cp "$templatePath/vue/coc-settings.json" .vim
     cp "$templatePath/vue/task.ini" .task.ini
     touch .root
-    rm ./tsconfig.json
-    cp "$templatePath/vue/tsconfig.json" tsconfig.json
-    rm src/shims-vue.d.ts
-    rm vite.config.ts
-    cp "$templatePath/vue/vite.config.ts" vite.config.ts
 elif [ $1 == "tauri" ]; then
     echo "What's your app's name?"
     read appName
     proxychains -q yarn create @vitejs/app $appName --template vue-ts
     cd $appName
     proxychains -q yarn set version berry
-    # proxychains -q yarn set version from sources
     cp "$templatePath/tauri/yarnrc.yml" .yarnrc.yml
     yarn install
     yarn add less -D
@@ -164,13 +158,15 @@ elif [ $1 == "gd32" ]; then
 elif [ $1 == "react" ]; then
     echo "What's your app's name?"
     read appName
-    proxychains -q yarn create react-app $appName --template typescript
+    proxychains -q yarn create react-app $appName --template typescript-sass-modules
     cd $appName
-    proxychains -q yarn add antd axios ahooks react-router-dom
-    proxychains -q yarn add --dev @types/react-router-dom
+    proxychains -q yarn add axios ahooks react-router-dom
+    proxychains -q yarn add --dev @types/react-router-dom @craco/craco
+    proxychains -q yarn add @mui/material @emotion/react @emotion/styled @mui/icons-material
     cp "$templatePath/react/task.ini" .task.ini
     cp "$templatePath/react/task.sh" .task.sh
     touch .root
+    rm -rf .vscode
     cd ./public
     rm -rf *
     cat >index.html <<EOF
@@ -185,6 +181,8 @@ elif [ $1 == "react" ]; then
   </body>
 </html>
 EOF
+    ncu -u
+    proxychains -q yarn
 elif [ $1 == "react-native" ]; then
     echo "What's your app's name?"
     read appName
