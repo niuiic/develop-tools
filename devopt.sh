@@ -28,13 +28,43 @@ elif [ $1 == "vue" ]; then
     cd $appName
     rm -rf .vscode
     proxychains -q yarn set version berry
-    cp "$templatePath/vue/yarnrc.yml" .yarnrc.yml
+    file=$(ls .yarn/releases)
+    cat >.yarnrc.yml <<EOF
+yarnPath: ".yarn/releases/$file"
+nodeLinker: node-modules
+npmRegistryServer: "https://registry.npm.taobao.org/"
+EOF
     yarn
     yarn add sass-loader node-sass -D
+    yarn add vuex@next
+    ncu -u
+    yarn
     mkdir .vim
     cp "$templatePath/vue/coc-settings.json" .vim
     cp "$templatePath/vue/task.ini" .task.ini
     touch .root
+    rm public/*
+    rm src/assets/*
+    rm src/components/*
+    rm index.html
+    cat >index.html <<EOF
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>$appName</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
+EOF
+    rm src/App.vue
+    cat >src/App.vue <<EOF
+<template>hello vue</template>
+EOF
 elif [ $1 == "tauri" ]; then
     echo "What's your app's name?"
     read appName
