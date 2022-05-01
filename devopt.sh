@@ -1,20 +1,30 @@
 templatePath="/home/niuiic/Applications/DevOpt/template"
 
+updateYarn() {
+    proxychains -q yarn set version berry
+    file=$(ls .yarn/releases)
+    cat >.yarnrc.yml <<EOF
+yarnPath: ".yarn/releases/$file"
+nodeLinker: node-modules
+npmRegistryServer: "https://registry.npm.taobao.org/"
+EOF
+    yarn
+}
+
 if (($# < 1)); then
     echo -e "1. \033[35m rust-aarch64-static \033[0m: Set configuration for rust project to use aacrh64 target with static library."
     echo -e "2. \033[35m vue \033[0m: Create a vue project with typescript, less and vite."
-    echo -e "3. \033[35m tauri \033[0m: Create a tauri project with vue typescript, less and vite."
-    echo -e "4. \033[35m package-with-tauri \033[0m: Package a vue project with tauri."
-    echo -e "5. \033[35m stm32 \033[0m: Create a rust stm32 project."
-    echo -e "6. \033[35m openocd-connect \033[0m: Connect to develop board with openocd."
-    echo -e "7. \033[35m openocd-disconnect \033[0m: Kill openocd."
-    echo -e "8. \033[35m fpga \033[0m: Init configuration for FPGA."
-    echo -e "9. \033[35m stm8 \033[0m: Create a stm8 project."
-    echo -e "10. \033[35m rust \033[0m: Create a normal rust project."
-    echo -e "11. \033[35m gd32 \033[0m: Create a rust gd32-riscv project."
-    echo -e "12. \033[35m react \033[0m: Create a react project."
-    echo -e "13. \033[35m react-native \033[0m: Create a react-native project."
-    echo -e "14. \033[35m beego-api \033[0m: Create a beego api project."
+    echo -e "3. \033[35m tauri \033[0m: Create a tauri project."
+    echo -e "4. \033[35m stm32 \033[0m: Create a rust stm32 project."
+    echo -e "5. \033[35m openocd-connect \033[0m: Connect to develop board with openocd."
+    echo -e "6. \033[35m openocd-disconnect \033[0m: Kill openocd."
+    echo -e "7. \033[35m fpga \033[0m: Init configuration for FPGA."
+    echo -e "8. \033[35m stm8 \033[0m: Create a stm8 project."
+    echo -e "9. \033[35m rust \033[0m: Create a normal rust project."
+    echo -e "10. \033[35m gd32 \033[0m: Create a rust gd32-riscv project."
+    echo -e "11. \033[35m react \033[0m: Create a react project."
+    echo -e "12. \033[35m react-native \033[0m: Create a react-native project."
+    echo -e "13. \033[35m beego-api \033[0m: Create a beego api project."
     exit 0
 fi
 
@@ -24,17 +34,10 @@ if [ $1 == "rust-aarch64-static" ]; then
 elif [ $1 == "vue" ]; then
     echo "What's your app's name?"
     read appName
-    proxychains -q yarn create @vitejs/app $appName --template vue-ts
+    proxychains -q yarn create vite $appName --template vue-ts
     cd $appName
     rm -rf .vscode
-    proxychains -q yarn set version berry
-    file=$(ls .yarn/releases)
-    cat >.yarnrc.yml <<EOF
-yarnPath: ".yarn/releases/$file"
-nodeLinker: node-modules
-npmRegistryServer: "https://registry.npm.taobao.org/"
-EOF
-    yarn
+    updateYarn
     yarn add sass-loader node-sass -D
     yarn add vuex@next
     ncu -u
@@ -68,36 +71,10 @@ EOF
 elif [ $1 == "tauri" ]; then
     echo "What's your app's name?"
     read appName
-    proxychains -q yarn create @vitejs/app $appName --template vue-ts
+    proxychains -q yarn create tauri-app $appName
     cd $appName
-    proxychains -q yarn set version berry
-    cp "$templatePath/tauri/yarnrc.yml" .yarnrc.yml
-    yarn install
-    yarn add less -D
-    yarn add eslint eslint-plugin-vue -D
-    yarn add @vuedx/typescript-plugin-vue -D
-    cp "$templatePath/tauri/task.ini" .task.ini
-    touch .root
-    rm ./tsconfig.json
-    cp "$templatePath/tauri/tsconfig.json" tsconfig.json
-    rm src/shims-vue.d.ts
-    rm vite.config.ts
-    cp "$templatePath/tauri/vite.config.ts" vite.config.ts
-    cp "$templatePath/tauri/tauri-plugin.ts" tauri-plugin.ts
-    yarn add tauri @types/sharp
-    yarn add @rollup/plugin-replace -D
-    yarn tauri init
-elif [ $1 == "package-with-tauri" ]; then
-    rm .task.ini
-    cp "$templatePath/tauri/task.ini" .task.ini
-    rm ./tsconfig.json
-    cp "$templatePath/tauri/tsconfig.json" tsconfig.json
-    rm vite.config.ts
-    cp "$templatePath/tauri/vite.config.ts" vite.config.ts
-    cp "$templatePath/tauri/tauri-plugin.ts" tauri-plugin.ts
-    yarn add tauri @types/sharp
-    yarn add @rollup/plugin-replace -D
-    yarn tauri init
+    rm -rf ./node_modules
+    updateYarn
 elif [ $1 == "stm32" ]; then
     echo "Please input the project name."
     read projectName
