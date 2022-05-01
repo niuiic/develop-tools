@@ -18,7 +18,7 @@ Tools may be needed:
 ## tools
 
 1.  rust-aarch64-static : Set configuration for rust project to use aacrh64 target with static library.
-2.  vue : Create a vue project with typescript, less and vite.
+2.  vue : Create a vue project with typescript, scss, vite and vuex.
 3.  tauri : Create a tauri project with vue typescript, less and vite.
 4.  package-with-tauri : Package a vue project with tauri.
 5.  stm32 : Create a rust stm32 project.
