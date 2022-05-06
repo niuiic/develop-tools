@@ -38,13 +38,15 @@ elif [ $1 == "vue" ]; then
     cd $appName
     rm -rf .vscode
     updateYarn
-    yarn add sass-loader node-sass -D
+    # yarn config set nodeLinker pnp
+    yarn add sass -D
     yarn add vuex@next
     ncu -u
     yarn
     mkdir .vim
     cp "$templatePath/vue/coc-settings.json" .vim
     cp "$templatePath/vue/task.ini" .task.ini
+    cp "$templatePath/vue/task.sh" .task.sh
     touch .root
     rm public/*
     rm src/assets/*
@@ -71,7 +73,7 @@ EOF
 elif [ $1 == "tauri" ]; then
     echo "What's your app's name?"
     read appName
-    proxychains -q yarn create tauri-app $appName
+    proxychains -q yarn create tauri-app -A $appName -W $appName
     cd $appName
     rm -rf ./node_modules
     updateYarn
