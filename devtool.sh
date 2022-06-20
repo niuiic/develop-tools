@@ -1,4 +1,4 @@
-templatePath="/home/niuiic/Applications/DevOpt/template"
+templatePath="/home/niuiic/Applications/develop-tools/template"
 
 updateYarn() {
     proxychains -q yarn set version berry
