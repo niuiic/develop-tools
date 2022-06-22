@@ -16,19 +16,19 @@ initGit() {
 }
 
 if (($# < 1)); then
-	echo -e "1. \033[35m rust-aarch64-static \033[0m: Set configuration for rust project to use aacrh64 target with static library."
-	echo -e "2. \033[35m vue \033[0m: Create a vue project with typescript, less and vite."
-	echo -e "3. \033[35m tauri \033[0m: Create a tauri project."
-	echo -e "4. \033[35m stm32 \033[0m: Create a rust stm32 project."
-	echo -e "5. \033[35m openocd-connect \033[0m: Connect to develop board with openocd."
-	echo -e "6. \033[35m openocd-disconnect \033[0m: Kill openocd."
-	echo -e "7. \033[35m fpga \033[0m: Init configuration for FPGA."
-	echo -e "8. \033[35m stm8 \033[0m: Create a stm8 project."
-	echo -e "9. \033[35m rust \033[0m: Create a normal rust project."
-	echo -e "10. \033[35m gd32 \033[0m: Create a rust gd32-riscv project."
-	echo -e "11. \033[35m react \033[0m: Create a react project."
-	echo -e "12. \033[35m react-native \033[0m: Create a react-native project."
-	echo -e "13. \033[35m beego-api \033[0m: Create a beego api project."
+	echo -e "1. \033[35m rust-aarch64-static\033[0m: Set configuration for rust project to use aacrh64 target with static library."
+	echo -e "2. \033[35m vue\033[0m: Create a vue project with typescript, less and vite."
+	echo -e "3. \033[35m tauri\033[0m: Create a tauri project."
+	echo -e "4. \033[35m stm32\033[0m: Create a rust stm32 project."
+	echo -e "5. \033[35m openocd-connect\033[0m: Connect to develop board with openocd."
+	echo -e "6. \033[35m openocd-disconnect\033[0m: Kill openocd."
+	echo -e "7. \033[35m fpga\033[0m: Init configuration for FPGA."
+	echo -e "8. \033[35m stm8\033[0m: Create a stm8 project."
+	echo -e "9. \033[35m rust\033[0m: Create a normal rust project."
+	echo -e "10. \033[35m gd32\033[0m: Create a rust gd32-riscv project."
+	echo -e "11. \033[35m react\033[0m: Create a react project."
+	echo -e "12. \033[35m react-native\033[0m: Create a react-native project."
+	echo -e "13. \033[35m beego-api\033[0m: Create a beego api project."
 	exit 0
 fi
 
