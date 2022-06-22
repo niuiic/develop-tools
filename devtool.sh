@@ -11,6 +11,10 @@ EOF
 	yarn
 }
 
+initGit() {
+	git init -b main
+}
+
 if (($# < 1)); then
 	echo -e "1. \033[35m rust-aarch64-static \033[0m: Set configuration for rust project to use aacrh64 target with static library."
 	echo -e "2. \033[35m vue \033[0m: Create a vue project with typescript, less and vite."
@@ -45,7 +49,7 @@ elif [ $1 == "vue" ]; then
 	yarn
 	cp "$templatePath/vue/task.ini" .task.ini
 	cp "$templatePath/vue/task.sh" .task.sh
-    git init
+	initGit
 	rm public/*
 	rm src/assets/*
 	rm src/components/*
@@ -86,7 +90,7 @@ elif [ $1 == "stm32" ]; then
 	while read line; do
 		echo -e $line >>Cargo.toml
 	done <"$templatePath/stm32/$chipName""_Cargo.toml"
-    git init
+	initGit
 	cp "$templatePath/stm32/$chipName""_memory.x" memory.x
 	cp "$templatePath/stm32/debug.gdb" debug.gdb
 	cp "$templatePath/stm32/$chipName""_task.ini" .task.ini
@@ -109,7 +113,7 @@ elif [ $1 == "fpga" ]; then
 	fi
 	cp "$templatePath/FPGA/task.ini" .task.ini
 	cp "$templatePath/FPGA/tasks.sh" .tasks.sh
-    git init
+	initGit
 elif [ $1 == "stm8" ]; then
 	echo "Please input the project name."
 	read projectName
@@ -121,7 +125,7 @@ elif [ $1 == "stm8" ]; then
 	cp "$templatePath/stm8/debug.gdb" debug.gdb
 	cp "$templatePath/stm8/root_CMakeLists.txt" CMakeLists.txt
 	sed -i "s/projectName/$projectName/g" CMakeLists.txt
-    git init
+	initGit
 	mkdir lib
 	mkdir inc
 	mkdir src
@@ -135,7 +139,7 @@ elif [ $1 == "rust" ]; then
 	cargo new $projectName
 	cd $projectName
 	cp "$templatePath/rust/task.ini" .task.ini
-    git init
+	initGit
 	cp "$templatePath/rust/tasks.sh" .tasks.sh
 	cp "$templatePath/rust/vimspector.json" .vimspector.json
 	sed -i "s/program_target/$projectName/g" .vimspector.json
@@ -160,7 +164,7 @@ elif [ $1 == "gd32" ]; then
 	cp "$templatePath/gd32/openocd.cfg" .
 	cp "$templatePath/gd32/debug.gdb" .
 	mkdir .cargo
-    git init
+	initGit
 	cp "$templatePath/gd32/config" ./.cargo
 elif [ $1 == "react" ]; then
 	echo "What's your app's name?"
@@ -172,7 +176,7 @@ elif [ $1 == "react" ]; then
 	proxychains -q yarn add @mui/material @emotion/react @emotion/styled @mui/icons-material
 	cp "$templatePath/react/task.ini" .task.ini
 	cp "$templatePath/react/task.sh" .task.sh
-    git init
+	initGit
 	rm -rf .vscode
 	cd ./public
 	rm -rf *
@@ -287,7 +291,7 @@ elif [ $1 == "react-native" ]; then
 	cp "$templatePath/react_native/task.ini" .task.ini
 	cp "$templatePath/react_native/task.sh" .task.sh
 	cp "$templatePath/react_native/eslintrc.js" .eslintrc.js
-    git init
+	initGit
 
 	# project configuration
 	cp "$templatePath/react_native/metro.config.js" metro.config.js
@@ -315,7 +319,7 @@ elif [ $1 == "beego-api" ]; then
 	go get github.com/go-sql-driver/mysql
 	bee generate docs
 	cp "$templatePath/beego/task.ini" .task.ini
-    git init
+	initGit
 
 	# test
 	echo "Do you want to add test framework (jest)? (Y or N)"
