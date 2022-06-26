@@ -53,6 +53,7 @@ elif [ $1 == "vue" ]; then
 	cp "$templatePath/vue/prettierrc.js" .prettierrc.js
 	cp "$templatePath/vue/eslintrc.js" .eslintrc.js
 	initGit
+	cp "$templatePath/vue/gitignore" .gitignore
 	rm public/*
 	rm src/assets/*
 	rm src/components/*
