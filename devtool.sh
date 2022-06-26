@@ -1,4 +1,4 @@
-templatePath="/home/niuiic/Applications/develop-tools/template"
+templatePath="$HOME/Applications/develop-tools/template"
 
 updateYarn() {
 	proxychains -q yarn set version berry
@@ -43,12 +43,15 @@ elif [ $1 == "vue" ]; then
 	rm -rf .vscode
 	updateYarn
 	# yarn config set nodeLinker pnp
-	yarn add sass -D
-	yarn add vuex@next
+	yarn add -D sass
+	yarn add pinia
+	yarn add -D eslint @babel/eslint-parser vue-eslint-parser eslint-plugin-vue eslint-config-alloy
 	ncu -u
 	yarn
 	cp "$templatePath/vue/task.ini" .task.ini
 	cp "$templatePath/vue/task.sh" .task.sh
+	cp "$templatePath/vue/prettierrc.js" .prettierrc.js
+	cp "$templatePath/vue/eslintrc.js" .eslintrc.js
 	initGit
 	rm public/*
 	rm src/assets/*
