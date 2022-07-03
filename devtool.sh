@@ -44,7 +44,7 @@ elif [ $1 == "vue" ]; then
 	updateYarn
 	# yarn config set nodeLinker pnp
 	yarn add -D sass
-	yarn add pinia
+	yarn add pinia vue-router
 	yarn add -D eslint @babel/eslint-parser vue-eslint-parser eslint-plugin-vue eslint-config-alloy
 	ncu -u
 	yarn
