@@ -29,6 +29,7 @@ if (($# < 1)); then
 	echo -e "11. \033[35m react\033[0m: Create a react project."
 	echo -e "12. \033[35m react-native\033[0m: Create a react-native project."
 	echo -e "13. \033[35m beego-api\033[0m: Create a beego api project."
+	echo -e "14. \033[35m git-commit\033[0m: Add git commit specification for the project."
 	exit 0
 fi
 
@@ -334,6 +335,15 @@ elif [ $1 == "beego-api" ]; then
 		proxychains -q yarn add --dev @testing-library/jest-native
 		echo "see details at https://docs.expo.dev/guides/testing-with-jest/"
 	fi
+elif [ $1 == "git-commit" ]; then
+	if [[ -f "package.json" ]]; then
+		echo "Add this content to package.json."
+		cat "$templatePath/git/package.json"
+	fi
+	cp "$templatePath/git/package.json" package.json
+	cp "$templatePath/git/commitlintrc.js" .commitlintrc.js
+	yarn add --dev commitizen cz-conventional-changelog
+	yarn add --dev @commitlint/cli @commitlint/config-conventional
 else
 	echo "No such arguments"
 fi

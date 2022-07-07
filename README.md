@@ -34,3 +34,4 @@ Modify `templatePath` defined at the first line of `devtool.sh`, then you can us
 11. react: Create a react project.
 12. react-native: Create a react-native project.
 13. beego-api: Create a beego api project.
+14. git-commit: Add git commit specification for the project.
