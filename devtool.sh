@@ -51,7 +51,7 @@ elif [ $1 == "vue" ]; then
 	yarn
 	cp "$templatePath/vue/task.ini" .task.ini
 	cp "$templatePath/vue/task.sh" .task.sh
-	cp "$templatePath/vue/prettierrc.js" .prettierrc.js
+	cp "$templatePath/vue/prettierrc.cjs" .prettierrc.cjs
 	cp "$templatePath/vue/eslintrc.js" .eslintrc.js
 	initGit
 	cp "$templatePath/vue/gitignore" .gitignore
