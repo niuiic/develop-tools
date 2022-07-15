@@ -53,30 +53,30 @@ elif [ $1 == "vue" ]; then
 	cp "$templatePath/vue/task.sh" .task.sh
 	cp "$templatePath/vue/prettierrc.cjs" .prettierrc.cjs
 	cp "$templatePath/vue/eslintrc.js" .eslintrc.js
-	initGit
-	cp "$templatePath/vue/gitignore" .gitignore
 	rm public/*
 	rm src/assets/*
 	rm src/components/*
 	rm index.html
 	cat >index.html <<EOF
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>$appName</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
-  </body>
-</html>
-EOF
+	<!DOCTYPE html>
+	<html lang="en">
+	  <head>
+	    <meta charset="UTF-8" />
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	    <title>$appName</title>
+	  </head>
+	  <body>
+	    <div id="app"></div>
+	    <script type="module" src="/src/main.js"></script>
+	  </body>
+	</html>
+	EOF
 	rm src/App.vue
 	cat >src/App.vue <<EOF
 <template>hello vue</template>
 EOF
+	initGit
+	cp "$templatePath/vue/gitignore" .gitignore
 elif [ $1 == "tauri" ]; then
 	echo "What's your app's name?"
 	read appName
