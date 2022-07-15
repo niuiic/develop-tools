@@ -39,7 +39,7 @@ if [ $1 == "rust-aarch64-static" ]; then
 elif [ $1 == "vue" ]; then
 	echo "What's your app's name?"
 	read appName
-	proxychains -q yarn create vite $appName --template vue-ts
+	proxychains -q yarn create vite $appName --template vue
 	cd $appName
 	rm -rf .vscode
 	updateYarn
