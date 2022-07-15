@@ -69,7 +69,7 @@ elif [ $1 == "vue" ]; then
   </head>
   <body>
     <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
+    <script type="module" src="/src/main.js"></script>
   </body>
 </html>
 EOF
