@@ -46,7 +46,7 @@ elif [ $1 == "vue" ]; then
 	# yarn config set nodeLinker pnp
 	yarn add -D sass
 	yarn add pinia vue-router
-	yarn add -D eslint @babel/eslint-parser vue-eslint-parser eslint-plugin-vue eslint-config-alloy
+	yarn add -D eslint @babel/core @babel/eslint-parser vue-eslint-parser eslint-plugin-vue eslint-config-alloy
 	ncu -u
 	yarn
 	cp "$templatePath/vue/task.ini" .task.ini
