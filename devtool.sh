@@ -58,19 +58,19 @@ elif [ $1 == "vue" ]; then
 	rm src/components/*
 	rm index.html
 	cat >index.html <<EOF
-	<!DOCTYPE html>
-	<html lang="en">
-	  <head>
-	    <meta charset="UTF-8" />
-	    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	    <title>$appName</title>
-	  </head>
-	  <body>
-	    <div id="app"></div>
-	    <script type="module" src="/src/main.js"></script>
-	  </body>
-	</html>
-	EOF
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>$appName</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
+EOF
 	rm src/App.vue
 	cat >src/App.vue <<EOF
 <template>hello vue</template>
