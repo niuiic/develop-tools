@@ -32,6 +32,7 @@ if (($# < 1)); then
 	echo -e "14. \033[35m git-commit\033[0m: Add git commit specification for the project."
 	echo -e "15. \033[35m vant\033[0m: Create a vant & vue project."
 	echo -e "16. \033[35m gin\033[0m: Create a gin project."
+	echo -e "17. \033[35m actix-web\033[0m: Create a actix-web project."
 	exit 0
 fi
 
@@ -385,6 +386,13 @@ func main() {
 }
 EOF
 	initGit
+elif [ $1 == "actix-web" ]; then
+	echo "What's your project's name?"
+	read projectName
+	cargo new $projectName
+	cd $projectName
+	echo 'actix-web = "4"' >>Cargo.toml
+	cp "$templatePath/actix_web/main.rs" src/main.rs
 else
 	echo "No such arguments"
 fi

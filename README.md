@@ -37,3 +37,4 @@ Modify `templatePath` defined at the first line of `devtool.sh`, then you can us
 14. git-commit: Add git commit specification for the project.
 15. vant: Create a vant & vue project.
 16. gin: Create a gin project.
+17. actix-web: Create a actix-web project.
