@@ -30,6 +30,8 @@ if (($# < 1)); then
 	echo -e "12. \033[35m react-native\033[0m: Create a react-native project."
 	echo -e "13. \033[35m beego-api\033[0m: Create a beego api project."
 	echo -e "14. \033[35m git-commit\033[0m: Add git commit specification for the project."
+	echo -e "15. \033[35m vant\033[0m: Create a vant & vue project."
+	echo -e "16. \033[35m gin\033[0m: Create a gin project."
 	exit 0
 fi
 
@@ -341,9 +343,48 @@ elif [ $1 == "git-commit" ]; then
 		cat "$templatePath/git/package.json"
 	fi
 	cp "$templatePath/git/package.json" package.json
-	cp "$templatePath/git/commitlintrc.js" .commitlintrc.js
+	cp "$templatePath/git/commitlintrc.cjs" .commitlintrc.cjs
 	yarn add --dev commitizen cz-conventional-changelog
 	yarn add --dev @commitlint/cli @commitlint/config-conventional
+elif [ $1 == "vant" ]; then
+	echo "What's your project's name?"
+	read projectName
+	yarn create vant-cli-app
+	cd $projectName
+	yarn
+elif [ $1 == "gin" ]; then
+	echo "What's your project's name?"
+	read projectName
+	mkdir $projectName
+	cd $projectName
+	go mod init $projectName
+	go get -u github.com/gin-gonic/gin
+	go get -u github.com/gin-contrib/cors
+	mkdir controller
+	mkdir model
+	mkdir test
+	cp "$templatePath/gin/user.go" controller/user.go
+	cp "$templatePath/gin/task.ini" .task.ini
+	cp "$templatePath/gin/task.sh" .task.sh
+	cat >main.go <<EOF
+package main
+
+import (
+	"$projectName/controller"
+
+	"github.com/gin-contrib/cors"
+	"github.com/gin-gonic/gin"
+)
+
+func main() {
+	gin.SetMode(gin.ReleaseMode)
+	router := gin.Default()
+	router.Use(cors.Default())
+	router.GET("/mock/user", controller.UserController)
+	router.Run("127.0.0.1:10000")
+}
+EOF
+	initGit
 else
 	echo "No such arguments"
 fi
